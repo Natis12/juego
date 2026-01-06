@@ -325,10 +325,19 @@
             font-weight: 600;
             color: #e2e8f0;
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hist-plural {
+            color: #64748b;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin-top: 2px;
         }
 
         .hist-meaning {
-            color: #64748b;
+            color: #94a3b8;
             font-size: 0.85rem;
             font-weight: 500;
         }
@@ -369,10 +378,13 @@
         }
 
         .feedback-text {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: white;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            padding: 0 20px;
+            line-height: 1.4;
         }
 
         .correct-answer-text {
@@ -573,90 +585,90 @@
     <script>
         const vocabulary = [
             // Transportes
-            { category: "Transportes", word: "Bus", article: "der", meaning: "Autobús" },
-            { category: "Transportes", word: "Zug", article: "der", meaning: "Tren" },
-            { category: "Transportes", word: "Reisebus", article: "der", meaning: "Autobús de viaje" },
-            { category: "Transportes", word: "Lastwagen", article: "der", meaning: "Camión" },
-            { category: "Transportes", word: "Hubschrauber", article: "der", meaning: "Helicóptero" },
-            { category: "Transportes", word: "U-Bahn", article: "die", meaning: "Metro" },
-            { category: "Transportes", word: "Straßenbahn", article: "die", meaning: "Tranvía" },
-            { category: "Transportes", word: "Fahrrad", article: "das", meaning: "Bicicleta" },
-            { category: "Transportes", word: "Moped", article: "das", meaning: "Ciclomotor" },
-            { category: "Transportes", word: "Motorrad", article: "das", meaning: "Motocicleta" },
-            { category: "Transportes", word: "Taxi", article: "das", meaning: "Taxi" },
-            { category: "Transportes", word: "Auto", article: "das", meaning: "Automóvil" },
-            { category: "Transportes", word: "Wohnmobil", article: "das", meaning: "Autocaravana" },
-            { category: "Transportes", word: "Flugzeug", article: "das", meaning: "Avión" },
-            { category: "Transportes", word: "Schiff", article: "das", meaning: "Barco" },
-            { category: "Transportes", word: "Boot", article: "das", meaning: "Bote" },
+            { category: "Transportes", word: "Bus", plural: "Busse", article: "der", meaning: "Autobús" },
+            { category: "Transportes", word: "Zug", plural: "Züge", article: "der", meaning: "Tren" },
+            { category: "Transportes", word: "Reisebus", plural: "Reisebusse", article: "der", meaning: "Autobús de viaje" },
+            { category: "Transportes", word: "Lastwagen", plural: "Lastwagen", article: "der", meaning: "Camión" },
+            { category: "Transportes", word: "Hubschrauber", plural: "Hubschrauber", article: "der", meaning: "Helicóptero" },
+            { category: "Transportes", word: "U-Bahn", plural: "U-Bahnen", article: "die", meaning: "Metro" },
+            { category: "Transportes", word: "Straßenbahn", plural: "Straßenbahnen", article: "die", meaning: "Tranvía" },
+            { category: "Transportes", word: "Fahrrad", plural: "Fahrräder", article: "das", meaning: "Bicicleta" },
+            { category: "Transportes", word: "Moped", plural: "Mopeds", article: "das", meaning: "Ciclomotor" },
+            { category: "Transportes", word: "Motorrad", plural: "Motorräder", article: "das", meaning: "Motocicleta" },
+            { category: "Transportes", word: "Taxi", plural: "Taxis", article: "das", meaning: "Taxi" },
+            { category: "Transportes", word: "Auto", plural: "Autos", article: "das", meaning: "Automóvil" },
+            { category: "Transportes", word: "Wohnmobil", plural: "Wohnmobile", article: "das", meaning: "Autocaravana" },
+            { category: "Transportes", word: "Flugzeug", plural: "Flugzeuge", article: "das", meaning: "Avión" },
+            { category: "Transportes", word: "Schiff", plural: "Schiffe", article: "das", meaning: "Barco" },
+            { category: "Transportes", word: "Boot", plural: "Boote", article: "das", meaning: "Bote" },
             // Lugares
-            { category: "Lugares", word: "Bahnhof", article: "der", meaning: "Estación de tren" },
-            { category: "Lugares", word: "Hafen", article: "der", meaning: "Puerto" },
-            { category: "Lugares", word: "Park", article: "der", meaning: "Parque" },
-            { category: "Lugares", word: "Markt", article: "der", meaning: "Mercado" },
-            { category: "Lugares", word: "Marktplatz", article: "der", meaning: "Plaza del mercado" },
-            { category: "Lugares", word: "Sportplatz", article: "der", meaning: "Campo deportivo" },
-            { category: "Lugares", word: "Spielplatz", article: "der", meaning: "Parque infantil" },
-            { category: "Lugares", word: "Supermarkt", article: "der", meaning: "Supermercado" },
-            { category: "Lugares", word: "Zoo", article: "der", meaning: "Zoológico" },
-            { category: "Lugares", word: "Fluss", article: "der", meaning: "Río" },
-            { category: "Lugares", word: "See", article: "der", meaning: "Lago" },
-            { category: "Lugares", word: "Turm", article: "der", meaning: "Torre" },
-            { category: "Lugares", word: "Rathaus", article: "das", meaning: "Ayuntamiento" },
-            { category: "Lugares", word: "Theater", article: "das", meaning: "Teatro" },
-            { category: "Lugares", word: "Museum", article: "das", meaning: "Museo" },
-            { category: "Lugares", word: "Hotel", article: "das", meaning: "Hotel" },
-            { category: "Lugares", word: "Kino", article: "das", meaning: "Cine" },
-            { category: "Lugares", word: "Café", article: "das", meaning: "Cafetería" },
-            { category: "Lugares", word: "Krankenhaus", article: "das", meaning: "Hospital" },
-            { category: "Lugares", word: "Schwimmbad", article: "das", meaning: "Piscina" },
-            { category: "Lugares", word: "Konzerthaus", article: "das", meaning: "Sala de conciertos" },
-            { category: "Lugares", word: "Kirche", article: "die", meaning: "Iglesia" },
-            { category: "Lugares", word: "Bank", article: "die", meaning: "Banco" },
-            { category: "Lugares", word: "Post", article: "die", meaning: "Correos" },
-            { category: "Lugares", word: "Schule", article: "die", meaning: "Escuela" },
-            { category: "Lugares", word: "Bibliothek", article: "die", meaning: "Biblioteca" },
-            { category: "Lugares", word: "Apotheke", article: "die", meaning: "Farmacia" },
-            { category: "Lugares", word: "Bushaltestelle", article: "die", meaning: "Parada de autobús" },
-            { category: "Lugares", word: "Polizei", article: "die", meaning: "Policía" },
-            { category: "Lugares", word: "Toilette", article: "die", meaning: "Baño" },
-            { category: "Lugares", word: "Kunsthalle", article: "die", meaning: "Galería de arte" },
-            { category: "Lugares", word: "Brücke", article: "die", meaning: "Puente" },
+            { category: "Lugares", word: "Bahnhof", plural: "Bahnhöfe", article: "der", meaning: "Estación de tren" },
+            { category: "Lugares", word: "Hafen", plural: "Häfen", article: "der", meaning: "Puerto" },
+            { category: "Lugares", word: "Park", plural: "Parks", article: "der", meaning: "Parque" },
+            { category: "Lugares", word: "Markt", plural: "Märkte", article: "der", meaning: "Mercado" },
+            { category: "Lugares", word: "Marktplatz", plural: "Marktplätze", article: "der", meaning: "Plaza del mercado" },
+            { category: "Lugares", word: "Sportplatz", plural: "Sportplätze", article: "der", meaning: "Campo deportivo" },
+            { category: "Lugares", word: "Spielplatz", plural: "Spielplätze", article: "der", meaning: "Parque infantil" },
+            { category: "Lugares", word: "Supermarkt", plural: "Supermärkte", article: "der", meaning: "Supermercado" },
+            { category: "Lugares", word: "Zoo", plural: "Zoos", article: "der", meaning: "Zoológico" },
+            { category: "Lugares", word: "Fluss", plural: "Flüsse", article: "der", meaning: "Río" },
+            { category: "Lugares", word: "See", plural: "Seen", article: "der", meaning: "Lago" },
+            { category: "Lugares", word: "Turm", plural: "Türme", article: "der", meaning: "Torre" },
+            { category: "Lugares", word: "Rathaus", plural: "Rathäuser", article: "das", meaning: "Ayuntamiento" },
+            { category: "Lugares", word: "Theater", plural: "Theater", article: "das", meaning: "Teatro" },
+            { category: "Lugares", word: "Museum", plural: "Museen", article: "das", meaning: "Museo" },
+            { category: "Lugares", word: "Hotel", plural: "Hotels", article: "das", meaning: "Hotel" },
+            { category: "Lugares", word: "Kino", plural: "Kinos", article: "das", meaning: "Cine" },
+            { category: "Lugares", word: "Café", plural: "Cafés", article: "das", meaning: "Cafetería" },
+            { category: "Lugares", word: "Krankenhaus", plural: "Krankenhäuser", article: "das", meaning: "Hospital" },
+            { category: "Lugares", word: "Schwimmbad", plural: "Schwimmbäder", article: "das", meaning: "Piscina" },
+            { category: "Lugares", word: "Konzerthaus", plural: "Konzerthäuser", article: "das", meaning: "Sala de conciertos" },
+            { category: "Lugares", word: "Kirche", plural: "Kirchen", article: "die", meaning: "Iglesia" },
+            { category: "Lugares", word: "Bank", plural: "Banken", article: "die", meaning: "Banco" },
+            { category: "Lugares", word: "Post", plural: "Post", article: "die", meaning: "Correos" },
+            { category: "Lugares", word: "Schule", plural: "Schulen", article: "die", meaning: "Escuela" },
+            { category: "Lugares", word: "Bibliothek", plural: "Bibliotheken", article: "die", meaning: "Biblioteca" },
+            { category: "Lugares", word: "Apotheke", plural: "Apotheken", article: "die", meaning: "Farmacia" },
+            { category: "Lugares", word: "Bushaltestelle", plural: "Bushaltestellen", article: "die", meaning: "Parada de autobús" },
+            { category: "Lugares", word: "Polizei", plural: "-", article: "die", meaning: "Policía" },
+            { category: "Lugares", word: "Toilette", plural: "Toiletten", article: "die", meaning: "Baño" },
+            { category: "Lugares", word: "Kunsthalle", plural: "Kunsthallen", article: "die", meaning: "Galería de arte" },
+            { category: "Lugares", word: "Brücke", plural: "Brücken", article: "die", meaning: "Puente" },
             // Comida
-            { category: "Comida", word: "Apfel", article: "der", meaning: "Manzana" },
-            { category: "Comida", word: "Salat", article: "der", meaning: "Ensalada" },
-            { category: "Comida", word: "Käse", article: "der", meaning: "Queso" },
-            { category: "Comida", word: "Schinken", article: "der", meaning: "Jamón" },
-            { category: "Comida", word: "Fisch", article: "der", meaning: "Pescado" },
-            { category: "Comida", word: "Kuchen", article: "der", meaning: "Pastel" },
-            { category: "Comida", word: "Reis", article: "der", meaning: "Arroz" },
-            { category: "Comida", word: "Kaffee", article: "der", meaning: "Café" },
-            { category: "Comida", word: "Tee", article: "der", meaning: "Té" },
-            { category: "Comida", word: "Wein", article: "der", meaning: "Vino" },
-            { category: "Comida", word: "Banane", article: "die", meaning: "Plátano" },
-            { category: "Comida", word: "Birne", article: "die", meaning: "Pera" },
-            { category: "Comida", word: "Orange", article: "die", meaning: "Naranja" },
-            { category: "Comida", word: "Kartoffel", article: "die", meaning: "Patata" },
-            { category: "Comida", word: "Tomate", article: "die", meaning: "Tomate" },
-            { category: "Comida", word: "Gurke", article: "die", meaning: "Pepino" },
-            { category: "Comida", word: "Zwiebel", article: "die", meaning: "Cebolla" },
-            { category: "Comida", word: "Milch", article: "die", meaning: "Leche" },
-            { category: "Comida", word: "Butter", article: "die", meaning: "Mantequilla" },
-            { category: "Comida", word: "Wurst", article: "die", meaning: "Salchicha" },
-            { category: "Comida", word: "Marmelade", article: "die", meaning: "Mermelada" },
-            { category: "Comida", word: "Suppe", article: "die", meaning: "Sopa" },
-            { category: "Comida", word: "Pizza", article: "die", meaning: "Pizza" },
-            { category: "Comida", word: "Torte", article: "die", meaning: "Tarta" },
-            { category: "Comida", word: "Gemüse", article: "das", meaning: "Verdura" },
-            { category: "Comida", word: "Ei", article: "das", meaning: "Huevo" },
-            { category: "Comida", word: "Fleisch", article: "das", meaning: "Carne" },
-            { category: "Comida", word: "Hähnchen", article: "das", meaning: "Pollo" },
-            { category: "Comida", word: "Brot", article: "das", meaning: "Pan" },
-            { category: "Comida", word: "Brötchen", article: "das", meaning: "Panecillo" },
-            { category: "Comida", word: "Salz", article: "das", meaning: "Sal" },
-            { category: "Comida", word: "Eis", article: "das", meaning: "Helado" },
-            { category: "Comida", word: "Wasser", article: "das", meaning: "Agua" },
-            { category: "Comida", word: "Bier", article: "das", meaning: "Cerveza" }
+            { category: "Comida", word: "Apfel", plural: "Äpfel", article: "der", meaning: "Manzana" },
+            { category: "Comida", word: "Salat", plural: "Salate", article: "der", meaning: "Ensalada" },
+            { category: "Comida", word: "Käse", plural: "Käse", article: "der", meaning: "Queso" },
+            { category: "Comida", word: "Schinken", plural: "Schinken", article: "der", meaning: "Jamón" },
+            { category: "Comida", word: "Fisch", plural: "Fische", article: "der", meaning: "Pescado" },
+            { category: "Comida", word: "Kuchen", plural: "Kuchen", article: "der", meaning: "Pastel" },
+            { category: "Comida", word: "Reis", plural: "-", article: "der", meaning: "Arroz" },
+            { category: "Comida", word: "Kaffee", plural: "Kaffees", article: "der", meaning: "Café" },
+            { category: "Comida", word: "Tee", plural: "Tees", article: "der", meaning: "Té" },
+            { category: "Comida", word: "Wein", plural: "Weine", article: "der", meaning: "Vino" },
+            { category: "Comida", word: "Banane", plural: "Bananen", article: "die", meaning: "Plátano" },
+            { category: "Comida", word: "Birne", plural: "Birnen", article: "die", meaning: "Pera" },
+            { category: "Comida", word: "Orange", plural: "Orangen", article: "die", meaning: "Naranja" },
+            { category: "Comida", word: "Kartoffel", plural: "Kartoffeln", article: "die", meaning: "Patata" },
+            { category: "Comida", word: "Tomate", plural: "Tomaten", article: "die", meaning: "Tomate" },
+            { category: "Comida", word: "Gurke", plural: "Gurken", article: "die", meaning: "Pepino" },
+            { category: "Comida", word: "Zwiebel", plural: "Zwiebeln", article: "die", meaning: "Cebolla" },
+            { category: "Comida", word: "Milch", plural: "-", article: "die", meaning: "Leche" },
+            { category: "Comida", word: "Butter", plural: "-", article: "die", meaning: "Mantequilla" },
+            { category: "Comida", word: "Wurst", plural: "Würste", article: "die", meaning: "Salchicha" },
+            { category: "Comida", word: "Marmelade", plural: "Marmeladen", article: "die", meaning: "Mermelada" },
+            { category: "Comida", word: "Suppe", plural: "Suppen", article: "die", meaning: "Sopa" },
+            { category: "Comida", word: "Pizza", plural: "Pizzas", article: "die", meaning: "Pizza" },
+            { category: "Comida", word: "Torte", plural: "Torten", article: "die", meaning: "Tarta" },
+            { category: "Comida", word: "Gemüse", plural: "Gemüse", article: "das", meaning: "Verdura" },
+            { category: "Comida", word: "Ei", plural: "Eier", article: "das", meaning: "Huevo" },
+            { category: "Comida", word: "Fleisch", plural: "-", article: "das", meaning: "Carne" },
+            { category: "Comida", word: "Hähnchen", plural: "Hähnchen", article: "das", meaning: "Pollo" },
+            { category: "Comida", word: "Brot", plural: "Brote", article: "das", meaning: "Pan" },
+            { category: "Comida", word: "Brötchen", plural: "Brötchen", article: "das", meaning: "Panecillo" },
+            { category: "Comida", word: "Salz", plural: "Salze", article: "das", meaning: "Sal" },
+            { category: "Comida", word: "Eis", plural: "-", article: "das", meaning: "Helado" },
+            { category: "Comida", word: "Wasser", plural: "Wässer", article: "das", meaning: "Agua" },
+            { category: "Comida", word: "Bier", plural: "Biere", article: "das", meaning: "Cerveza" }
         ];
 
         let state = {
@@ -766,11 +778,66 @@
             div.style.borderLeft = isCorrect ? '4px solid #22c55e' : '4px solid #f43f5e';
             div.innerHTML = `
                 <div class="hist-article hist-${item.article}">${item.article}</div>
-                <div class="hist-word">${item.word}</div>
+                <div class="hist-word">
+                    ${item.word}
+                    <span class="hist-plural">${item.plural || '-'}</span>
+                </div>
                 <div class="hist-meaning">${item.meaning}</div>
             `;
             els.historyList.prepend(div);
             if (els.historyList.children.length > 10) els.historyList.removeChild(els.historyList.lastChild);
+        }
+
+        // TROLL MESSAGES ARRAYS
+        const successMessages = [
+            "¿Te aplaudo o qué?", "Vaya, hoy te funciona el cerebro.", "No te flipes, ha sido suerte.",
+            "Milagro... has acertado una.", "Seguro que miraste en Google.", "Hasta un reloj roto acierta...",
+            "Te crees muy listo, ¿no?", "Wow, qué logro... (sarcasmo)", "Al fin haces algo bien.",
+            "No te acostumbres, crack.", "Demasiado fácil...", "¿Eso es todo lo que tienes?",
+            "Soy una máquina.", "Ni he sudado.", "¡Abran paso!", "Sin despeinarme.",
+            "Pura calidad.", "Nivel Dios.", "Me aburro de ganar.", "Imparable.",
+            "Venga, la siguiente fallas.", "¿Quieres un pin?", "Pasable... por los pelos.",
+            "No ha estado mal, supongo.", "Hoy estás inspirado, eh.", "Menos humos, Einstein.",
+            "¿Quién te ha soplado la respuesta?", "Vale, aceptamos barco.", "No cantes victoria aún."
+        ];
+
+        const failMessages = [
+            "¿Eres daltónico o solo lento?", "Madre mía, qué vergüenza.", "¿Te estás esforzando en ser malo?",
+            "Mi calculadora tiene más IQ.", "Borra el juego, en serio.", "Hasta mi abuela lo sabía.",
+            "Das un poco de pena, ¿no?", "Mejor dedícate al parchís.", "Felicidades, eres un desastre.",
+            "¿Esa era tu respuesta? JAJAJA.", "¿En serio? 🤦‍♂️", "Dolió ver eso.",
+            "Ponle voluntad...", "Mi sobrino sabe esa.", "Vergüenza ajena.",
+            "Hoy no es tu día.", "¿Le diste sin querer?", "A estudiar más.",
+            "Terrible... apocalíptico.", "No das una, hijo mío.", "¿Te has leído el manual?",
+            "Vaya puntería... de ciego.", "Error 404: Cerebro not found.", "Mejor suerte la próxima vida.",
+            "¿Te pagan por fallar?", "Eso ha sido doloroso.", "Mis ojos sangran.",
+            "¿Estás adivinando o qué?", "No... simplemente no."
+        ];
+
+        // Message Pools (Mutable copies)
+        let availableSuccessMsgs = [...successMessages];
+        let availableFailMsgs = [...failMessages];
+
+        function getUniqueMessage(isSuccess) {
+            // Select appropriate pool
+            let pool = isSuccess ? availableSuccessMsgs : availableFailMsgs;
+            const originalPool = isSuccess ? successMessages : failMessages;
+
+            // Refill if empty
+            if (pool.length === 0) {
+                pool = [...originalPool];
+                if (isSuccess) availableSuccessMsgs = pool;
+                else availableFailMsgs = pool;
+            }
+
+            // Pick random index
+            const randomIndex = Math.floor(Math.random() * pool.length);
+            const message = pool[randomIndex];
+
+            // Remove used message from pool
+            pool.splice(randomIndex, 1);
+
+            return message;
         }
 
         function handleSuccess(item) {
@@ -778,7 +845,7 @@
             state.streak++;
             updateStats();
             showFeedback(true, item);
-            setTimeout(() => { state.currentIndex++; loadCard(); }, 900);
+            setTimeout(() => { state.currentIndex++; loadCard(); }, 1200); // Little more time for Msg
         }
 
         function handleFail(item) {
@@ -791,14 +858,17 @@
                 els.btnReview.style.display = 'block';
                 els.btnReview.textContent = `🔄 Repasar mis ${state.errors.length} Errores`;
             }
-            setTimeout(() => { state.currentIndex++; loadCard(); }, 1800);
+            setTimeout(() => { state.currentIndex++; loadCard(); }, 2000); // More time to read insult
         }
 
         function showFeedback(isCorrect, item) {
             els.overlay.classList.add('visible');
             els.fbIcon.textContent = isCorrect ? '🎉' : '❌';
-            els.fbText.textContent = isCorrect ? '¡CORRECTO!' : 'INCORRECTO';
+
+            // Get unique non-repeating message
+            els.fbText.textContent = getUniqueMessage(isCorrect);
             els.fbText.style.color = isCorrect ? '#22c55e' : '#f43f5e';
+
             els.fbSub.innerHTML = isCorrect ?
                 `¡Sigue así!` :
                 `La respuesta era <b style="color:var(--${item.article}); text-transform:uppercase">${item.article}</b> ${item.word}`;
@@ -848,7 +918,10 @@
                     div.className = 'history-item';
                     div.innerHTML = `
                         <div class="hist-article hist-${item.article}">${item.article}</div>
-                        <div class="hist-word">${item.word}</div>
+                        <div class="hist-word">
+                            ${item.word}
+                            <span class="hist-plural">${item.plural || '-'}</span>
+                        </div>
                         <div class="hist-meaning">${item.meaning}</div>
                     `;
                     els.fullList.appendChild(div);
