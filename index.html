@@ -3,152 +3,282 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Artículos Alemán A1.1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Juego de Artículos Alemán</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --der: #2563eb;
-            --die: #dc2626;
-            --das: #16a34a;
-            --die-p: #6b7280;
+            --der: #3b82f6;
+            --die: #ef4444;
+            --das: #22c55e;
+            --die-p: #64748b;
             --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
+            --text: #0f172a;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
             color: var(--text);
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
         }
 
-        .game-container {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
+        .game-wrapper {
             width: 100%;
+            max-width: 400px;
+            position: relative;
+            padding-bottom: 20px;
         }
 
-        h1 {
-            color: #334155;
-            margin-bottom: 5px;
-            font-size: 1.5rem;
-        }
-
-        .subtitle {
+        /* Header Stats */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
             color: #64748b;
             font-size: 0.9rem;
-            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 10px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
         }
 
-        .word-card {
-            background: #f1f5f9;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
+        .stat-val span {
+            color: var(--text);
+            font-weight: 800;
         }
 
-        .word {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: block;
+        /* Progress Bar */
+        .progress-container {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
+            margin: 10px 0 25px;
+            overflow: hidden;
         }
 
-        .meaning {
-            color: #64748b;
-            font-size: 1rem;
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            width: 0%;
+            transition: width 0.3s ease-out;
+            border-radius: 3px;
         }
 
-        .options {
+        /* Main Card */
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .word-de {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #1e293b;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        .word-es {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Buttons Grid */
+        .controls {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 30px;
         }
 
         .btn {
             border: none;
-            padding: 15px 10px;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 16px;
+            padding: 20px 10px;
+            font-size: 1.2rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
             color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .btn:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
 
+        /* Button Colors */
         .btn-der {
             background: var(--der);
+            box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.3);
         }
 
         .btn-die {
             background: var(--die);
+            box-shadow: 0 8px 15px -3px rgba(239, 68, 68, 0.3);
         }
 
         .btn-das {
             background: var(--das);
+            box-shadow: 0 8px 15px -3px rgba(34, 197, 94, 0.3);
         }
 
-        .btn-die-p {
-            background: var(--die-p);
-            grid-column: span 3;
+        /* History Section */
+        .history-section {
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .feedback {
-            height: 40px;
+        .history-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            animation: slideIn 0.3s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hist-article {
+            font-weight: 800;
+            margin-right: 8px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            padding: 3px 6px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .hist-der {
+            background: var(--der);
+        }
+
+        .hist-die {
+            background: var(--die);
+        }
+
+        .hist-das {
+            background: var(--das);
+        }
+
+        .hist-word {
             font-weight: 600;
-            margin-top: 15px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            color: #334155;
+            flex-grow: 1;
         }
 
-        .feedback.visible {
+        .hist-meaning {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        /* Feedback Overlay */
+        .feedback-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .feedback-overlay.correct {
+            background: rgba(255, 255, 255, 0.9);
             opacity: 1;
         }
 
-        .feedback.correct {
-            color: #10b981;
+        .feedback-overlay.wrong {
+            background: rgba(254, 226, 226, 0.9);
+            opacity: 1;
         }
 
-        .feedback.wrong {
-            color: #ef4444;
+        .feedback-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .score-board {
-            margin-top: 20px;
+        .feedback-overlay.visible .feedback-icon {
+            transform: scale(1);
+        }
+
+        .feedback-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .correct-answer-text {
             font-size: 0.9rem;
+            margin-top: 5px;
             color: #64748b;
-            display: flex;
-            justify-content: space-between;
-            background: #f8fafc;
-            padding: 10px 15px;
-            border-radius: 10px;
         }
 
-        /* Animation classes */
-        .shake {
-            animation: shake 0.5s;
-        }
-
+        /* Animations */
         @keyframes shake {
 
             0%,
@@ -156,260 +286,261 @@
                 transform: translateX(0);
             }
 
-            25% {
+            20% {
+                transform: translateX(-10px);
+            }
+
+            40% {
+                transform: translateX(10px);
+            }
+
+            60% {
                 transform: translateX(-5px);
             }
 
-            75% {
+            80% {
                 transform: translateX(5px);
             }
         }
 
-        .success-anim {
-            animation: pop 0.3s;
-            background: #dcfce7;
-            border-color: #86efac;
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
         }
 
-        @keyframes pop {
-            50% {
-                transform: scale(1.05);
+        @media (max-height: 700px) {
+            .card {
+                padding: 30px 15px;
+                margin-bottom: 20px;
             }
-        }
 
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 3px;
-            margin-top: 20px;
-            overflow: hidden;
-        }
+            .word-de {
+                font-size: 2rem;
+            }
 
-        .progress-fill {
-            height: 100%;
-            background: #3b82f6;
-            width: 0%;
-            transition: width 0.3s ease;
+            .btn {
+                padding: 15px 10px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="game-container">
-        <h1>🇩🇪 Der, Die o Das?</h1>
-        <div class="subtitle">¡Adivina el artículo correcto!</div>
+    <div class="game-wrapper">
+        <h3 style="text-align:center; margin:0 0 15px; opacity:0.5; font-size:0.8rem; letter-spacing:1px">ALEMÁN A1.1
+        </h3>
 
-        <div class="score-board">
-            <span>Racha: <b id="streak">0</b> 🔥</span>
-            <span>Aciertos: <b id="score">0</b></span>
+        <div class="stats-bar">
+            <div class="stat-val">🔥 <span id="streak">0</span></div>
+            <div class="stat-val">✅ <span id="score">0</span></div>
         </div>
 
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
         </div>
 
-        <div class="word-card" id="card">
-            <span class="word" id="word">...</span>
-            <span class="meaning" id="meaning">...</span>
+        <div class="card" id="card">
+            <div class="word-de" id="word">...</div>
+            <div class="word-es" id="meaning">...</div>
+
+            <!-- Feedback Overlay inside card -->
+            <div class="feedback-overlay" id="feedback-overlay">
+                <div class="feedback-icon" id="feedback-icon"></div>
+                <div class="feedback-text" id="feedback-text"></div>
+                <div class="correct-answer-text" id="feedback-sub"></div>
+            </div>
         </div>
 
-        <div class="options">
-            <button class="btn btn-der" onclick="checkAnswer('der')">der</button>
-            <button class="btn btn-die" onclick="checkAnswer('die')">die</button>
-            <button class="btn btn-das" onclick="checkAnswer('das')">das</button>
+        <div class="controls">
+            <button class="btn btn-der" onclick="handleInput('der')">der</button>
+            <button class="btn btn-die" onclick="handleInput('die')">die</button>
+            <button class="btn btn-das" onclick="handleInput('das')">das</button>
         </div>
 
-        <div class="feedback" id="feedback"></div>
+        <div class="history-section">
+            <div class="history-title">Historial</div>
+            <div class="history-list" id="history-list">
+                <!-- History items will appear here -->
+            </div>
+        </div>
     </div>
 
     <script>
+        // Data populated from previous context
         const vocabulary = [
             // Transportes
-            { word: "Bus", article: "der", meaning: "Autobús" },
-            { word: "Zug", article: "der", meaning: "Tren" },
-            { word: "Reisebus", article: "der", meaning: "Autobús de viaje" },
-            { word: "Lastwagen", article: "der", meaning: "Camión" },
-            { word: "Hubschrauber", article: "der", meaning: "Helicóptero" },
-            { word: "U-Bahn", article: "die", meaning: "Metro" },
-            { word: "Straßenbahn", article: "die", meaning: "Tranvía" },
-            { word: "Fahrrad", article: "das", meaning: "Bicicleta" },
-            { word: "Moped", article: "das", meaning: "Ciclomotor" },
-            { word: "Motorrad", article: "das", meaning: "Motocicleta" },
-            { word: "Taxi", article: "das", meaning: "Taxi" },
-            { word: "Auto", article: "das", meaning: "Automóvil" },
-            { word: "Wohnmobil", article: "das", meaning: "Autocaravana" },
-            { word: "Flugzeug", article: "das", meaning: "Avión" },
-            { word: "Schiff", article: "das", meaning: "Barco" },
-            { word: "Boot", article: "das", meaning: "Bote" },
-
+            { word: "Bus", article: "der", meaning: "Autobús" }, { word: "Zug", article: "der", meaning: "Tren" },
+            { word: "Reisebus", article: "der", meaning: "Autobús de viaje" }, { word: "Lastwagen", article: "der", meaning: "Camión" },
+            { word: "Hubschrauber", article: "der", meaning: "Helicóptero" }, { word: "U-Bahn", article: "die", meaning: "Metro" },
+            { word: "Straßenbahn", article: "die", meaning: "Tranvía" }, { word: "Fahrrad", article: "das", meaning: "Bicicleta" },
+            { word: "Moped", article: "das", meaning: "Ciclomotor" }, { word: "Motorrad", article: "das", meaning: "Motocicleta" },
+            { word: "Taxi", article: "das", meaning: "Taxi" }, { word: "Auto", article: "das", meaning: "Automóvil" },
+            { word: "Wohnmobil", article: "das", meaning: "Autocaravana" }, { word: "Flugzeug", article: "das", meaning: "Avión" },
+            { word: "Schiff", article: "das", meaning: "Barco" }, { word: "Boot", article: "das", meaning: "Bote" },
             // Lugares
-            { word: "Bahnhof", article: "der", meaning: "Estación de tren" },
-            { word: "Hafen", article: "der", meaning: "Puerto" },
-            { word: "Park", article: "der", meaning: "Parque" },
-            { word: "Markt", article: "der", meaning: "Mercado" },
-            { word: "Marktplatz", article: "der", meaning: "Plaza del mercado" },
-            { word: "Sportplatz", article: "der", meaning: "Campo deportivo" },
-            { word: "Spielplatz", article: "der", meaning: "Parque infantil" },
-            { word: "Supermarkt", article: "der", meaning: "Supermercado" },
-            { word: "Zoo", article: "der", meaning: "Zoológico" },
-            { word: "Fluss", article: "der", meaning: "Río" },
-            { word: "See", article: "der", meaning: "Lago" },
-            { word: "Turm", article: "der", meaning: "Torre" },
-            { word: "Rathaus", article: "das", meaning: "Ayuntamiento" },
-            { word: "Theater", article: "das", meaning: "Teatro" },
-            { word: "Museum", article: "das", meaning: "Museo" },
-            { word: "Hotel", article: "das", meaning: "Hotel" },
-            { word: "Kino", article: "das", meaning: "Cine" },
-            { word: "Café", article: "das", meaning: "Cafetería" },
-            { word: "Krankenhaus", article: "das", meaning: "Hospital" },
-            { word: "Schwimmbad", article: "das", meaning: "Piscina" },
-            { word: "Konzerthaus", article: "das", meaning: "Sala de conciertos" },
-            { word: "Kirche", article: "die", meaning: "Iglesia" },
-            { word: "Bank", article: "die", meaning: "Banco" },
-            { word: "Post", article: "die", meaning: "Correos" },
-            { word: "Schule", article: "die", meaning: "Escuela" },
-            { word: "Bibliothek", article: "die", meaning: "Biblioteca" },
-            { word: "Apotheke", article: "die", meaning: "Farmacia" },
-            { word: "Bushaltestelle", article: "die", meaning: "Parada de autobús" },
-            { word: "Polizei", article: "die", meaning: "Policía" },
-            { word: "Toilette", article: "die", meaning: "Baño" },
-            { word: "Kunsthalle", article: "die", meaning: "Galería de arte" },
-            { word: "Brücke", article: "die", meaning: "Puente" },
-
-            // Comida (Selección)
-            { word: "Apfel", article: "der", meaning: "Manzana" },
-            { word: "Salat", article: "der", meaning: "Ensalada" },
-            { word: "Käse", article: "der", meaning: "Queso" },
-            { word: "Schinken", article: "der", meaning: "Jamón" },
-            { word: "Fisch", article: "der", meaning: "Pescado" },
-            { word: "Kuchen", article: "der", meaning: "Pastel" },
-            { word: "Reis", article: "der", meaning: "Arroz" },
-            { word: "Kaffee", article: "der", meaning: "Café" },
-            { word: "Tee", article: "der", meaning: "Té" },
-            { word: "Wein", article: "der", meaning: "Vino" },
-            { word: "Banane", article: "die", meaning: "Plátano" },
-            { word: "Birne", article: "die", meaning: "Pera" },
-            { word: "Orange", article: "die", meaning: "Naranja" },
-            { word: "Kartoffel", article: "die", meaning: "Patata" },
-            { word: "Tomate", article: "die", meaning: "Tomate" },
-            { word: "Gurke", article: "die", meaning: "Pepino" },
-            { word: "Zwiebel", article: "die", meaning: "Cebolla" },
-            { word: "Milch", article: "die", meaning: "Leche" },
-            { word: "Butter", article: "die", meaning: "Mantequilla" },
-            { word: "Wurst", article: "die", meaning: "Salchicha" },
-            { word: "Marmelade", article: "die", meaning: "Mermelada" },
-            { word: "Suppe", article: "die", meaning: "Sopa" },
-            { word: "Pizza", article: "die", meaning: "Pizza" },
-            { word: "Torte", article: "die", meaning: "Tarta" },
-            { word: "Gemüse", article: "das", meaning: "Verdura" },
-            { word: "Ei", article: "das", meaning: "Huevo" },
-            { word: "Fleisch", article: "das", meaning: "Carne" },
-            { word: "Hähnchen", article: "das", meaning: "Pollo" },
-            { word: "Brot", article: "das", meaning: "Pan" },
-            { word: "Brötchen", article: "das", meaning: "Panecillo" },
-            { word: "Salz", article: "das", meaning: "Sal" },
-            { word: "Eis", article: "das", meaning: "Helado" },
-            { word: "Wasser", article: "das", meaning: "Agua" },
-            { word: "Bier", article: "das", meaning: "Cerveza" }
+            { word: "Bahnhof", article: "der", meaning: "Estación de tren" }, { word: "Hafen", article: "der", meaning: "Puerto" },
+            { word: "Park", article: "der", meaning: "Parque" }, { word: "Markt", article: "der", meaning: "Mercado" },
+            { word: "Marktplatz", article: "der", meaning: "Plaza del mercado" }, { word: "Sportplatz", article: "der", meaning: "Campo deportivo" },
+            { word: "Spielplatz", article: "der", meaning: "Parque infantil" }, { word: "Supermarkt", article: "der", meaning: "Supermercado" },
+            { word: "Zoo", article: "der", meaning: "Zoológico" }, { word: "Fluss", article: "der", meaning: "Río" },
+            { word: "See", article: "der", meaning: "Lago" }, { word: "Turm", article: "der", meaning: "Torre" },
+            { word: "Rathaus", article: "das", meaning: "Ayuntamiento" }, { word: "Theater", article: "das", meaning: "Teatro" },
+            { word: "Museum", article: "das", meaning: "Museo" }, { word: "Hotel", article: "das", meaning: "Hotel" },
+            { word: "Kino", article: "das", meaning: "Cine" }, { word: "Café", article: "das", meaning: "Cafetería" },
+            { word: "Krankenhaus", article: "das", meaning: "Hospital" }, { word: "Schwimmbad", article: "das", meaning: "Piscina" },
+            { word: "Konzerthaus", article: "das", meaning: "Sala de conciertos" }, { word: "Kirche", article: "die", meaning: "Iglesia" },
+            { word: "Bank", article: "die", meaning: "Banco" }, { word: "Post", article: "die", meaning: "Correos" },
+            { word: "Schule", article: "die", meaning: "Escuela" }, { word: "Bibliothek", article: "die", meaning: "Biblioteca" },
+            { word: "Apotheke", article: "die", meaning: "Farmacia" }, { word: "Bushaltestelle", article: "die", meaning: "Parada de autobús" },
+            { word: "Polizei", article: "die", meaning: "Policía" }, { word: "Toilette", article: "die", meaning: "Baño" },
+            { word: "Kunsthalle", article: "die", meaning: "Galería de arte" }, { word: "Brücke", article: "die", meaning: "Puente" },
+            // Comida
+            { word: "Apfel", article: "der", meaning: "Manzana" }, { word: "Salat", article: "der", meaning: "Ensalada" },
+            { word: "Käse", article: "der", meaning: "Queso" }, { word: "Schinken", article: "der", meaning: "Jamón" },
+            { word: "Fisch", article: "der", meaning: "Pescado" }, { word: "Kuchen", article: "der", meaning: "Pastel" },
+            { word: "Reis", article: "der", meaning: "Arroz" }, { word: "Kaffee", article: "der", meaning: "Café" },
+            { word: "Tee", article: "der", meaning: "Té" }, { word: "Wein", article: "der", meaning: "Vino" },
+            { word: "Banane", article: "die", meaning: "Plátano" }, { word: "Birne", article: "die", meaning: "Pera" },
+            { word: "Orange", article: "die", meaning: "Naranja" }, { word: "Kartoffel", article: "die", meaning: "Patata" },
+            { word: "Tomate", article: "die", meaning: "Tomate" }, { word: "Gurke", article: "die", meaning: "Pepino" },
+            { word: "Zwiebel", article: "die", meaning: "Cebolla" }, { word: "Milch", article: "die", meaning: "Leche" },
+            { word: "Butter", article: "die", meaning: "Mantequilla" }, { word: "Wurst", article: "die", meaning: "Salchicha" },
+            { word: "Marmelade", article: "die", meaning: "Mermelada" }, { word: "Suppe", article: "die", meaning: "Sopa" },
+            { word: "Pizza", article: "die", meaning: "Pizza" }, { word: "Torte", article: "die", meaning: "Tarta" },
+            { word: "Gemüse", article: "das", meaning: "Verdura" }, { word: "Ei", article: "das", meaning: "Huevo" },
+            { word: "Fleisch", article: "das", meaning: "Carne" }, { word: "Hähnchen", article: "das", meaning: "Pollo" },
+            { word: "Brot", article: "das", meaning: "Pan" }, { word: "Brötchen", article: "das", meaning: "Panecillo" },
+            { word: "Salz", article: "das", meaning: "Sal" }, { word: "Eis", article: "das", meaning: "Helado" },
+            { word: "Wasser", article: "das", meaning: "Agua" }, { word: "Bier", article: "das", meaning: "Cerveza" }
         ];
 
-        let currentWord = null;
-        let score = 0;
-        let streak = 0;
-        let questionsAnswered = 0;
-        const totalQuestions = vocabulary.length;
+        let state = {
+            currentIndex: 0,
+            score: 0,
+            streak: 0,
+            deck: []
+        };
+
+        const els = {
+            card: document.getElementById('card'),
+            word: document.getElementById('word'),
+            meaning: document.getElementById('meaning'),
+            score: document.getElementById('score'),
+            streak: document.getElementById('streak'),
+            progress: document.getElementById('progress'),
+            overlay: document.getElementById('feedback-overlay'),
+            fbIcon: document.getElementById('feedback-icon'),
+            fbText: document.getElementById('feedback-text'),
+            fbSub: document.getElementById('feedback-sub'),
+            btns: document.querySelectorAll('.btn'),
+            historyList: document.getElementById('history-list')
+        };
+
+        function init() {
+            state.deck = shuffle([...vocabulary]);
+            loadCard();
+        }
 
         function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
+            return array.sort(() => Math.random() - 0.5);
         }
 
-        // Shuffle vocabulary at start
-        shuffle(vocabulary);
+        function loadCard() {
+            if (state.currentIndex >= state.deck.length) {
+                state.deck = shuffle([...vocabulary]);
+                state.currentIndex = 0;
+            }
+
+            const item = state.deck[state.currentIndex];
+            els.word.textContent = item.word;
+            els.meaning.textContent = item.meaning;
+
+            // Reset UI
+            els.card.classList.remove('shake');
+            els.overlay.className = 'feedback-overlay';
+            els.overlay.classList.remove('visible');
+            els.btns.forEach(b => b.disabled = false);
+
+            // Update Progress
+            const progress = (state.currentIndex / state.deck.length) * 100;
+            els.progress.style.width = `${progress}%`;
+        }
+
+        function handleInput(choice) {
+            const item = state.deck[state.currentIndex];
+            const isCorrect = choice === item.article;
+
+            // Lock buttons
+            els.btns.forEach(b => b.disabled = true);
+
+            if (isCorrect) {
+                handleSuccess(item);
+            } else {
+                handleFail(item);
+            }
+
+            // Add to history
+            addToHistory(item);
+        }
+
+        function addToHistory(item) {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.innerHTML = `
+                <div class="hist-article hist-${item.article}">${item.article}</div>
+                <div class="hist-word">${item.word}</div>
+                <div class="hist-meaning">${item.meaning}</div>
+            `;
+            els.historyList.prepend(div);
+
+            // Keep only last 10
+            if (els.historyList.children.length > 10) {
+                els.historyList.removeChild(els.historyList.lastChild);
+            }
+        }
+
+        function handleSuccess(item) {
+            state.score++;
+            state.streak++;
+            updateStats();
+
+            showFeedback(true, item);
+
+            setTimeout(() => {
+                state.currentIndex++;
+                loadCard();
+            }, 1000);
+        }
+
+        function handleFail(item) {
+            state.streak = 0;
+            updateStats();
+
+            els.card.classList.add('shake');
+            showFeedback(false, item);
+
+            setTimeout(() => {
+                state.currentIndex++;
+                loadCard();
+            }, 1800);
+        }
+
+        function showFeedback(isCorrect, item) {
+            els.overlay.className = `feedback-overlay ${isCorrect ? 'correct' : 'wrong'} visible`;
+            els.fbIcon.textContent = isCorrect ? '🎉' : '❌';
+            els.fbText.textContent = isCorrect ? '¡Correcto!' : 'Ups...';
+            els.fbText.style.color = isCorrect ? '#059669' : '#dc2626';
+
+            els.fbSub.innerHTML = isCorrect ?
+                `Genial` :
+                `La respuesta es <b style="color:var(--${item.article})">${item.article.toUpperCase()}</b> ${item.word}`;
+        }
 
         function updateStats() {
-            document.getElementById('score').innerText = score;
-            document.getElementById('streak').innerText = streak;
-
-            const progress = (questionsAnswered / totalQuestions) * 100;
-            document.getElementById('progress').style.width = `${progress}%`;
+            els.score.textContent = state.score;
+            els.streak.textContent = state.streak;
         }
 
-        function nextCard() {
-            if (questionsAnswered >= totalQuestions) {
-                // Restart game
-                questionsAnswered = 0;
-                shuffle(vocabulary);
-                document.getElementById('feedback').innerHTML = "¡Ronda terminada! Empezando de nuevo...";
-                setTimeout(() => {
-                    document.getElementById('feedback').innerHTML = "";
-                    document.getElementById('feedback').className = "feedback";
-                }, 2000);
-            }
-
-            currentWord = vocabulary[questionsAnswered];
-
-            const card = document.getElementById('card');
-            card.classList.remove('success-anim', 'shake');
-
-            // Trigger reflow
-            void card.offsetWidth;
-
-            document.getElementById('word').innerText = currentWord.word;
-            document.getElementById('meaning').innerText = currentWord.meaning;
-            document.getElementById('feedback').className = "feedback";
-
-            // Enable buttons
-            const btns = document.querySelectorAll('.btn');
-            btns.forEach(btn => btn.disabled = false);
-        }
-
-        function checkAnswer(answer) {
-            const feedback = document.getElementById('feedback');
-            const card = document.getElementById('card');
-            const btns = document.querySelectorAll('.btn');
-
-            // Disable buttons temporarily
-            btns.forEach(btn => btn.disabled = true);
-
-            if (answer === currentWord.article) {
-                // Correct
-                score++;
-                streak++;
-                feedback.innerHTML = `¡Correcto! Es <span style="color:var(--${answer})">${answer.toUpperCase()} ${currentWord.word}</span>`;
-                feedback.className = "feedback visible correct";
-                card.classList.add('success-anim');
-
-                // Play sound (optional, simple beep placeholder or just visual)
-
-                setTimeout(() => {
-                    questionsAnswered++;
-                    updateStats();
-                    nextCard();
-                }, 1200);
-            } else {
-                // Incorrect
-                streak = 0;
-                feedback.innerHTML = `Incorrecto. Es <span style="color:var(--${currentWord.article})">${currentWord.article.toUpperCase()} ${currentWord.word}</span>`;
-                feedback.className = "feedback visible wrong";
-                card.classList.add('shake');
-
-                updateStats();
-                setTimeout(() => {
-                    questionsAnswered++;
-                    updateStats(); // Update progress even if wrong
-                    nextCard();
-                }, 2000);
-            }
-        }
-
-        // Start the game
-        nextCard();
-
+        init();
     </script>
 </body>
 
