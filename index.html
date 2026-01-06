@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Artículos Alemán A1.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --der: #2563eb;
+            --die: #dc2626;
+            --das: #16a34a;
+            --die-p: #6b7280;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #334155;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .word-card {
+            background: #f1f5f9;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .word {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .meaning {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            border: none;
+            padding: 15px 10px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-der {
+            background: var(--der);
+        }
+
+        .btn-die {
+            background: var(--die);
+        }
+
+        .btn-das {
+            background: var(--das);
+        }
+
+        .btn-die-p {
+            background: var(--die-p);
+            grid-column: span 3;
+        }
+
+        .feedback {
+            height: 40px;
+            font-weight: 600;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feedback.visible {
+            opacity: 1;
+        }
+
+        .feedback.correct {
+            color: #10b981;
+        }
+
+        .feedback.wrong {
+            color: #ef4444;
+        }
+
+        .score-board {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #64748b;
+            display: flex;
+            justify-content: space-between;
+            background: #f8fafc;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+
+        /* Animation classes */
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .success-anim {
+            animation: pop 0.3s;
+            background: #dcfce7;
+            border-color: #86efac;
+        }
+
+        @keyframes pop {
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>🇩🇪 Der, Die o Das?</h1>
+        <div class="subtitle">¡Adivina el artículo correcto!</div>
+
+        <div class="score-board">
+            <span>Racha: <b id="streak">0</b> 🔥</span>
+            <span>Aciertos: <b id="score">0</b></span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div class="word-card" id="card">
+            <span class="word" id="word">...</span>
+            <span class="meaning" id="meaning">...</span>
+        </div>
+
+        <div class="options">
+            <button class="btn btn-der" onclick="checkAnswer('der')">der</button>
+            <button class="btn btn-die" onclick="checkAnswer('die')">die</button>
+            <button class="btn btn-das" onclick="checkAnswer('das')">das</button>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        const vocabulary = [
+            // Transportes
+            { word: "Bus", article: "der", meaning: "Autobús" },
+            { word: "Zug", article: "der", meaning: "Tren" },
+            { word: "Reisebus", article: "der", meaning: "Autobús de viaje" },
+            { word: "Lastwagen", article: "der", meaning: "Camión" },
+            { word: "Hubschrauber", article: "der", meaning: "Helicóptero" },
+            { word: "U-Bahn", article: "die", meaning: "Metro" },
+            { word: "Straßenbahn", article: "die", meaning: "Tranvía" },
+            { word: "Fahrrad", article: "das", meaning: "Bicicleta" },
+            { word: "Moped", article: "das", meaning: "Ciclomotor" },
+            { word: "Motorrad", article: "das", meaning: "Motocicleta" },
+            { word: "Taxi", article: "das", meaning: "Taxi" },
+            { word: "Auto", article: "das", meaning: "Automóvil" },
+            { word: "Wohnmobil", article: "das", meaning: "Autocaravana" },
+            { word: "Flugzeug", article: "das", meaning: "Avión" },
+            { word: "Schiff", article: "das", meaning: "Barco" },
+            { word: "Boot", article: "das", meaning: "Bote" },
+
+            // Lugares
+            { word: "Bahnhof", article: "der", meaning: "Estación de tren" },
+            { word: "Hafen", article: "der", meaning: "Puerto" },
+            { word: "Park", article: "der", meaning: "Parque" },
+            { word: "Markt", article: "der", meaning: "Mercado" },
+            { word: "Marktplatz", article: "der", meaning: "Plaza del mercado" },
+            { word: "Sportplatz", article: "der", meaning: "Campo deportivo" },
+            { word: "Spielplatz", article: "der", meaning: "Parque infantil" },
+            { word: "Supermarkt", article: "der", meaning: "Supermercado" },
+            { word: "Zoo", article: "der", meaning: "Zoológico" },
+            { word: "Fluss", article: "der", meaning: "Río" },
+            { word: "See", article: "der", meaning: "Lago" },
+            { word: "Turm", article: "der", meaning: "Torre" },
+            { word: "Rathaus", article: "das", meaning: "Ayuntamiento" },
+            { word: "Theater", article: "das", meaning: "Teatro" },
+            { word: "Museum", article: "das", meaning: "Museo" },
+            { word: "Hotel", article: "das", meaning: "Hotel" },
+            { word: "Kino", article: "das", meaning: "Cine" },
+            { word: "Café", article: "das", meaning: "Cafetería" },
+            { word: "Krankenhaus", article: "das", meaning: "Hospital" },
+            { word: "Schwimmbad", article: "das", meaning: "Piscina" },
+            { word: "Konzerthaus", article: "das", meaning: "Sala de conciertos" },
+            { word: "Kirche", article: "die", meaning: "Iglesia" },
+            { word: "Bank", article: "die", meaning: "Banco" },
+            { word: "Post", article: "die", meaning: "Correos" },
+            { word: "Schule", article: "die", meaning: "Escuela" },
+            { word: "Bibliothek", article: "die", meaning: "Biblioteca" },
+            { word: "Apotheke", article: "die", meaning: "Farmacia" },
+            { word: "Bushaltestelle", article: "die", meaning: "Parada de autobús" },
+            { word: "Polizei", article: "die", meaning: "Policía" },
+            { word: "Toilette", article: "die", meaning: "Baño" },
+            { word: "Kunsthalle", article: "die", meaning: "Galería de arte" },
+            { word: "Brücke", article: "die", meaning: "Puente" },
+
+            // Comida (Selección)
+            { word: "Apfel", article: "der", meaning: "Manzana" },
+            { word: "Salat", article: "der", meaning: "Ensalada" },
+            { word: "Käse", article: "der", meaning: "Queso" },
+            { word: "Schinken", article: "der", meaning: "Jamón" },
+            { word: "Fisch", article: "der", meaning: "Pescado" },
+            { word: "Kuchen", article: "der", meaning: "Pastel" },
+            { word: "Reis", article: "der", meaning: "Arroz" },
+            { word: "Kaffee", article: "der", meaning: "Café" },
+            { word: "Tee", article: "der", meaning: "Té" },
+            { word: "Wein", article: "der", meaning: "Vino" },
+            { word: "Banane", article: "die", meaning: "Plátano" },
+            { word: "Birne", article: "die", meaning: "Pera" },
+            { word: "Orange", article: "die", meaning: "Naranja" },
+            { word: "Kartoffel", article: "die", meaning: "Patata" },
+            { word: "Tomate", article: "die", meaning: "Tomate" },
+            { word: "Gurke", article: "die", meaning: "Pepino" },
+            { word: "Zwiebel", article: "die", meaning: "Cebolla" },
+            { word: "Milch", article: "die", meaning: "Leche" },
+            { word: "Butter", article: "die", meaning: "Mantequilla" },
+            { word: "Wurst", article: "die", meaning: "Salchicha" },
+            { word: "Marmelade", article: "die", meaning: "Mermelada" },
+            { word: "Suppe", article: "die", meaning: "Sopa" },
+            { word: "Pizza", article: "die", meaning: "Pizza" },
+            { word: "Torte", article: "die", meaning: "Tarta" },
+            { word: "Gemüse", article: "das", meaning: "Verdura" },
+            { word: "Ei", article: "das", meaning: "Huevo" },
+            { word: "Fleisch", article: "das", meaning: "Carne" },
+            { word: "Hähnchen", article: "das", meaning: "Pollo" },
+            { word: "Brot", article: "das", meaning: "Pan" },
+            { word: "Brötchen", article: "das", meaning: "Panecillo" },
+            { word: "Salz", article: "das", meaning: "Sal" },
+            { word: "Eis", article: "das", meaning: "Helado" },
+            { word: "Wasser", article: "das", meaning: "Agua" },
+            { word: "Bier", article: "das", meaning: "Cerveza" }
+        ];
+
+        let currentWord = null;
+        let score = 0;
+        let streak = 0;
+        let questionsAnswered = 0;
+        const totalQuestions = vocabulary.length;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Shuffle vocabulary at start
+        shuffle(vocabulary);
+
+        function updateStats() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('streak').innerText = streak;
+
+            const progress = (questionsAnswered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function nextCard() {
+            if (questionsAnswered >= totalQuestions) {
+                // Restart game
+                questionsAnswered = 0;
+                shuffle(vocabulary);
+                document.getElementById('feedback').innerHTML = "¡Ronda terminada! Empezando de nuevo...";
+                setTimeout(() => {
+                    document.getElementById('feedback').innerHTML = "";
+                    document.getElementById('feedback').className = "feedback";
+                }, 2000);
+            }
+
+            currentWord = vocabulary[questionsAnswered];
+
+            const card = document.getElementById('card');
+            card.classList.remove('success-anim', 'shake');
+
+            // Trigger reflow
+            void card.offsetWidth;
+
+            document.getElementById('word').innerText = currentWord.word;
+            document.getElementById('meaning').innerText = currentWord.meaning;
+            document.getElementById('feedback').className = "feedback";
+
+            // Enable buttons
+            const btns = document.querySelectorAll('.btn');
+            btns.forEach(btn => btn.disabled = false);
+        }
+
+        function checkAnswer(answer) {
+            const feedback = document.getElementById('feedback');
+            const card = document.getElementById('card');
+            const btns = document.querySelectorAll('.btn');
+
+            // Disable buttons temporarily
+            btns.forEach(btn => btn.disabled = true);
+
+            if (answer === currentWord.article) {
+                // Correct
+                score++;
+                streak++;
+                feedback.innerHTML = `¡Correcto! Es <span style="color:var(--${answer})">${answer.toUpperCase()} ${currentWord.word}</span>`;
+                feedback.className = "feedback visible correct";
+                card.classList.add('success-anim');
+
+                // Play sound (optional, simple beep placeholder or just visual)
+
+                setTimeout(() => {
+                    questionsAnswered++;
+                    updateStats();
+                    nextCard();
+                }, 1200);
+            } else {
+                // Incorrect
+                streak = 0;
+                feedback.innerHTML = `Incorrecto. Es <span style="color:var(--${currentWord.article})">${currentWord.article.toUpperCase()} ${currentWord.word}</span>`;
+                feedback.className = "feedback visible wrong";
+                card.classList.add('shake');
+
+                updateStats();
+                setTimeout(() => {
+                    questionsAnswered++;
+                    updateStats(); // Update progress even if wrong
+                    nextCard();
+                }, 2000);
+            }
+        }
+
+        // Start the game
+        nextCard();
+
+    </script>
+</body>
+
+</html>
