@@ -4,18 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Juego de Artículos Alemán</title>
+    <title>Juego Alemán Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Colores Neon Premium */
             --der: #3b82f6;
-            --die: #ef4444;
+            /* Azul eléctrico */
+            --die: #f43f5e;
+            /* Rosa intenso */
             --das: #22c55e;
-            --die-p: #64748b;
-            --bg: #f8fafc;
-            --text: #0f172a;
-            --card-bg: #ffffff;
-            --accent: #8b5cf6;
+            /* Verde neón */
+
+            --bg-dark: #0f172a;
+            /* Fondo principal muy oscuro */
+            --card-dark: #1e293b;
+            /* Fondo de tarjetas */
+            --text-light: #f8fafc;
+            /* Texto principal */
+            --text-dim: #94a3b8;
+            /* Texto secundario */
+
+            --accent-glow: rgba(139, 92, 246, 0.5);
         }
 
         * {
@@ -26,8 +36,10 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
-            color: var(--text);
+            background-color: var(--bg-dark);
+            /* Sutil gradiente oscuro */
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+            color: var(--text-light);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -43,19 +55,31 @@
             padding-bottom: 20px;
         }
 
+        /* Título Estilizado */
+        h3 {
+            text-align: center;
+            margin: 0 0 20px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
         /* Review Mode Banner */
         .review-banner {
-            background: var(--accent);
+            background: linear-gradient(90deg, #7c3aed, #db2777);
             color: white;
             text-align: center;
-            padding: 8px;
+            padding: 10px;
             border-radius: 12px;
-            margin-bottom: 15px;
-            font-weight: 700;
+            margin-bottom: 20px;
+            font-weight: 800;
             font-size: 0.9rem;
             display: none;
             animation: slideDown 0.3s ease-out;
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 20px rgba(219, 39, 119, 0.4);
+            letter-spacing: 0.5px;
         }
 
         @keyframes slideDown {
@@ -70,217 +94,231 @@
             }
         }
 
-        /* Header Stats */
+        /* Stats Bar Glassmorphism Dark */
         .stats-bar {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-weight: 600;
-            color: #64748b;
-            font-size: 0.9rem;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 10px 15px;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 12px 20px;
             border-radius: 20px;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .stat-val {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .stat-val span {
-            color: var(--text);
+            color: white;
             font-weight: 800;
         }
 
         .error-count {
             color: var(--die);
+            text-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
         }
 
         /* Progress Bar */
         .progress-container {
-            height: 6px;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 3px;
-            margin: 10px 0 25px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 10px 0 30px;
             overflow: hidden;
         }
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            background: linear-gradient(90deg, #3b82f6, #ec4899);
             width: 0%;
-            transition: width 0.3s ease-out;
-            border-radius: 3px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
 
-        /* Main Card */
+        /* Main Card Dark */
         .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 40px 20px;
+            background: var(--card-dark);
+            border-radius: 30px;
+            padding: 50px 20px;
             text-align: center;
-            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            margin-bottom: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .word-de {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 8px;
-            color: #1e293b;
-            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            color: white;
+            letter-spacing: -1px;
             line-height: 1.1;
         }
 
         .word-es {
-            font-size: 1.1rem;
-            color: #94a3b8;
+            font-size: 1.2rem;
+            color: var(--text-dim);
             font-weight: 500;
         }
 
-        /* Buttons Grid */
+        /* Controls */
         .controls {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 15px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .btn {
             border: none;
-            border-radius: 16px;
-            padding: 20px 10px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            border-radius: 20px;
+            padding: 22px 10px;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: white;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-transform: lowercase;
         }
 
         .btn:active {
-            transform: scale(0.92);
+            transform: scale(0.94);
         }
 
+        /* Neon Buttons */
         .btn-der {
             background: var(--der);
-            box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2);
+            border-bottom: 4px solid #2563eb;
         }
 
         .btn-die {
             background: var(--die);
-            box-shadow: 0 8px 15px -3px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2);
+            border-bottom: 4px solid #e11d48;
         }
 
         .btn-das {
             background: var(--das);
-            box-shadow: 0 8px 15px -3px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2);
+            border-bottom: 4px solid #16a34a;
         }
 
-        /* Review Errors Button */
+        .btn:active {
+            border-bottom-width: 0;
+            margin-top: 4px;
+        }
+
+        /* Review Button */
         .btn-review {
             width: 100%;
-            background: white;
+            background: transparent;
             color: var(--die);
             border: 2px solid var(--die);
-            padding: 12px;
-            border-radius: 16px;
+            padding: 15px;
+            border-radius: 18px;
             font-weight: 700;
             font-size: 1rem;
             margin-bottom: 30px;
             display: none;
             cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-review:active {
             transform: scale(0.98);
+            background: rgba(244, 63, 94, 0.1);
         }
 
-        /* History Section */
+        /* History Section Dark */
         .history-section {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
         }
 
         .history-title {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94a3b8;
+            letter-spacing: 2px;
+            color: var(--text-dim);
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             text-align: center;
+            opacity: 0.6;
         }
 
         .history-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .history-item {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 10px 15px;
-            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 12px 15px;
+            border-radius: 14px;
             font-size: 0.95rem;
             animation: slideIn 0.3s ease-out;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .hist-article {
             font-weight: 800;
-            margin-right: 8px;
+            margin-right: 12px;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            padding: 3px 6px;
-            border-radius: 6px;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 8px;
             color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .hist-der {
             background: var(--der);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
 
         .hist-die {
             background: var(--die);
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
         }
 
         .hist-das {
             background: var(--das);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
         }
 
         .hist-word {
             font-weight: 600;
-            color: #334155;
+            color: #e2e8f0;
             flex-grow: 1;
         }
 
         .hist-meaning {
-            color: #94a3b8;
-            font-size: 0.8rem;
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         /* Feedback Overlay */
@@ -290,7 +328,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 24px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -298,24 +336,21 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.85);
+            /* Dark blur */
+            z-index: 10;
         }
 
-        .feedback-overlay.correct {
-            background: rgba(255, 255, 255, 0.9);
-            opacity: 1;
-        }
-
-        .feedback-overlay.wrong {
-            background: rgba(254, 226, 226, 0.9);
+        .feedback-overlay.visible {
             opacity: 1;
         }
 
         .feedback-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 4rem;
+            margin-bottom: 15px;
             transform: scale(0);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s;
         }
 
         .feedback-overlay.visible .feedback-icon {
@@ -323,18 +358,21 @@
         }
 
         .feedback-text {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text);
+            color: white;
+            margin-bottom: 5px;
         }
 
         .correct-answer-text {
-            font-size: 0.9rem;
-            margin-top: 5px;
-            color: #64748b;
+            font-size: 1rem;
+            color: #cbd5e1;
         }
 
-        /* Animations */
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
         @keyframes shake {
 
             0%,
@@ -343,24 +381,20 @@
             }
 
             20% {
-                transform: translateX(-10px);
+                transform: translateX(-8px);
             }
 
             40% {
-                transform: translateX(10px);
+                transform: translateX(8px);
             }
 
             60% {
-                transform: translateX(-5px);
+                transform: translateX(-4px);
             }
 
             80% {
-                transform: translateX(5px);
+                transform: translateX(4px);
             }
-        }
-
-        .shake {
-            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
         }
 
         @media (max-height: 700px) {
@@ -370,11 +404,11 @@
             }
 
             .word-de {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .btn {
-                padding: 15px 10px;
+                padding: 18px 10px;
             }
         }
     </style>
@@ -382,10 +416,9 @@
 
 <body>
     <div class="game-wrapper">
-        <h3 style="text-align:center; margin:0 0 15px; opacity:0.5; font-size:0.8rem; letter-spacing:1px">ALEMÁN A1.1
-        </h3>
+        <h3>Sergio el bueno</h3>
 
-        <div id="review-banner" class="review-banner">⚡ MODO REPASO DE ERRORES</div>
+        <div id="review-banner" class="review-banner">⚡ MODO REPASO ACTIVO</div>
 
         <div class="stats-bar">
             <div class="stat-val">🔥 <span id="streak">0</span></div>
@@ -419,7 +452,7 @@
         </button>
 
         <div class="history-section">
-            <div class="history-title">Historial</div>
+            <div class="history-title">Últimas palabras</div>
             <div class="history-list" id="history-list"></div>
         </div>
     </div>
@@ -510,16 +543,15 @@
 
         function startReviewMode() {
             if (state.errors.length === 0) return;
-
             state.isReviewMode = true;
-            state.deck = shuffle([...state.errors]); // Copy errors to deck
+            state.deck = shuffle([...state.errors]);
             state.currentIndex = 0;
-            state.errors = []; // Clear errors stack for new session (or keep? usually clear to retry)
+            state.errors = [];
 
             els.banner.style.display = 'block';
             els.banner.textContent = `⚡ REPASANDO ${state.deck.length} ERRORES`;
             els.btnReview.style.display = 'none';
-            els.errors.textContent = 0; // Reset error counter view
+            els.errors.textContent = 0;
 
             loadCard();
         }
@@ -527,7 +559,7 @@
         function endReviewMode() {
             state.isReviewMode = false;
             els.banner.style.display = 'none';
-            state.deck = shuffle([...vocabulary]); // Back to normal deck
+            state.deck = shuffle([...vocabulary]);
             state.currentIndex = 0;
             loadCard();
         }
@@ -547,13 +579,11 @@
             els.word.textContent = item.word;
             els.meaning.textContent = item.meaning;
 
-            // Reset UI
             els.card.classList.remove('shake');
             els.overlay.className = 'feedback-overlay';
             els.overlay.classList.remove('visible');
             els.btns.forEach(b => b.disabled = false);
 
-            // Update Progress
             const progress = (state.currentIndex / state.deck.length) * 100;
             els.progress.style.width = `${progress}%`;
         }
@@ -576,7 +606,7 @@
         function addToHistory(item, isCorrect) {
             const div = document.createElement('div');
             div.className = 'history-item';
-            div.style.borderLeft = isCorrect ? '4px solid #4ade80' : '4px solid #ef4444';
+            div.style.borderLeft = isCorrect ? '4px solid #22c55e' : '4px solid #f43f5e';
             div.innerHTML = `
                 <div class="hist-article hist-${item.article}">${item.article}</div>
                 <div class="hist-word">${item.word}</div>
@@ -599,23 +629,19 @@
             setTimeout(() => {
                 state.currentIndex++;
                 loadCard();
-            }, 1000);
+            }, 900);
         }
 
         function handleFail(item) {
             state.streak = 0;
-
-            // Add to errors if unique
             if (!state.errors.find(e => e.word === item.word)) {
                 state.errors.push(item);
             }
-
             updateStats();
 
             els.card.classList.add('shake');
             showFeedback(false, item);
 
-            // Show review button if we have errors
             if (state.errors.length > 0 && !state.isReviewMode) {
                 els.btnReview.style.display = 'block';
                 els.btnReview.textContent = `🔄 Repasar mis ${state.errors.length} Errores`;
@@ -630,12 +656,12 @@
         function showFeedback(isCorrect, item) {
             els.overlay.className = `feedback-overlay ${isCorrect ? 'correct' : 'wrong'} visible`;
             els.fbIcon.textContent = isCorrect ? '🎉' : '❌';
-            els.fbText.textContent = isCorrect ? '¡Correcto!' : 'Ups...';
-            els.fbText.style.color = isCorrect ? '#059669' : '#dc2626';
+            els.fbText.textContent = isCorrect ? '¡CORRECTO!' : 'INCORRECTO';
+            els.fbText.style.color = isCorrect ? '#22c55e' : '#f43f5e';
 
             els.fbSub.innerHTML = isCorrect ?
-                `Genial` :
-                `La respuesta es <b style="color:var(--${item.article})">${item.article.toUpperCase()}</b> ${item.word}`;
+                `¡Sigue así!` :
+                `La respuesta era <b style="color:var(--${item.article}); text-transform:uppercase">${item.article}</b> ${item.word}`;
         }
 
         function updateStats() {
