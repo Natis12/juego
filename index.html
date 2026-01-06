@@ -24,8 +24,6 @@
             /* Texto principal */
             --text-dim: #94a3b8;
             /* Texto secundario */
-
-            --accent-glow: rgba(139, 92, 246, 0.5);
         }
 
         * {
@@ -37,11 +35,11 @@
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
-            /* Sutil gradiente oscuro */
             background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
             color: var(--text-light);
             margin: 0;
-            padding: 20px;
+            padding: 20px 20px 80px 20px;
+            /* Padding bottom for navbar */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -52,10 +50,8 @@
             width: 100%;
             max-width: 400px;
             position: relative;
-            padding-bottom: 20px;
         }
 
-        /* Título Estilizado */
         h3 {
             text-align: center;
             margin: 0 0 20px;
@@ -66,7 +62,30 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* Review Mode Banner */
+        /* Tabs / Screens */
+        .screen {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* GAME STYLES */
         .review-banner {
             background: linear-gradient(90deg, #7c3aed, #db2777);
             color: white;
@@ -94,7 +113,6 @@
             }
         }
 
-        /* Stats Bar Glassmorphism Dark */
         .stats-bar {
             display: flex;
             justify-content: space-between;
@@ -126,7 +144,6 @@
             text-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
         }
 
-        /* Progress Bar */
         .progress-container {
             height: 4px;
             background: rgba(255, 255, 255, 0.1);
@@ -144,18 +161,17 @@
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
 
-        /* Main Card Dark */
         .card {
             background: var(--card-dark);
             border-radius: 30px;
             padding: 50px 20px;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .word-de {
@@ -173,7 +189,6 @@
             font-weight: 500;
         }
 
-        /* Controls */
         .controls {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -200,7 +215,6 @@
             transform: scale(0.94);
         }
 
-        /* Neon Buttons */
         .btn-der {
             background: var(--der);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.2);
@@ -224,7 +238,6 @@
             margin-top: 4px;
         }
 
-        /* Review Button */
         .btn-review {
             width: 100%;
             background: transparent;
@@ -247,7 +260,6 @@
             background: rgba(244, 63, 94, 0.1);
         }
 
-        /* History Section Dark */
         .history-section {
             width: 100%;
             margin-top: 15px;
@@ -321,7 +333,6 @@
             font-weight: 500;
         }
 
-        /* Feedback Overlay */
         .feedback-overlay {
             position: absolute;
             top: 0;
@@ -397,6 +408,76 @@
             }
         }
 
+        /* VOCAB LIST STYLES */
+        .vocab-list-container {
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .list-category-header {
+            margin: 20px 0 10px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+
+        .vocab-filter {
+            width: 100%;
+            background: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 5px;
+            display: flex;
+            gap: 5px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 25px;
+            color: var(--text-dim);
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn span {
+            font-size: 0.9rem;
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
         @media (max-height: 700px) {
             .card {
                 padding: 30px 15px;
@@ -410,6 +491,14 @@
             .btn {
                 padding: 18px 10px;
             }
+
+            body {
+                padding-bottom: 70px;
+            }
+
+            .bottom-nav {
+                bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -418,91 +507,156 @@
     <div class="game-wrapper">
         <h3>Sergio el bueno</h3>
 
-        <div id="review-banner" class="review-banner">⚡ MODO REPASO ACTIVO</div>
+        <!-- PANTALLA JUEGO -->
+        <div id="screen-game" class="screen active">
+            <div id="review-banner" class="review-banner">⚡ MODO REPASO ACTIVO</div>
 
-        <div class="stats-bar">
-            <div class="stat-val">🔥 <span id="streak">0</span></div>
-            <div class="stat-val">⚠️ <span id="errors" class="error-count">0</span></div>
-            <div class="stat-val">✅ <span id="score">0</span></div>
-        </div>
+            <div class="stats-bar">
+                <div class="stat-val">🔥 <span id="streak">0</span></div>
+                <div class="stat-val">⚠️ <span id="errors" class="error-count">0</span></div>
+                <div class="stat-val">✅ <span id="score">0</span></div>
+            </div>
 
-        <div class="progress-container">
-            <div class="progress-bar" id="progress"></div>
-        </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress"></div>
+            </div>
 
-        <div class="card" id="card">
-            <div class="word-de" id="word">...</div>
-            <div class="word-es" id="meaning">...</div>
+            <div class="card" id="card">
+                <div class="word-de" id="word">...</div>
+                <div class="word-es" id="meaning">...</div>
 
-            <div class="feedback-overlay" id="feedback-overlay">
-                <div class="feedback-icon" id="feedback-icon"></div>
-                <div class="feedback-text" id="feedback-text"></div>
-                <div class="correct-answer-text" id="feedback-sub"></div>
+                <div class="feedback-overlay" id="feedback-overlay">
+                    <div class="feedback-icon" id="feedback-icon"></div>
+                    <div class="feedback-text" id="feedback-text"></div>
+                    <div class="correct-answer-text" id="feedback-sub"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-der" onclick="handleInput('der')">der</button>
+                <button class="btn btn-das" onclick="handleInput('das')">das</button>
+                <button class="btn btn-die" onclick="handleInput('die')">die</button>
+            </div>
+
+            <button id="btn-review" class="btn-review" onclick="startReviewMode()">
+                🔄 Repasar mis Errores
+            </button>
+
+            <div class="history-section">
+                <div class="history-title">Últimas palabras</div>
+                <div class="history-list" id="history-list"></div>
             </div>
         </div>
 
-        <div class="controls">
-            <button class="btn btn-der" onclick="handleInput('der')">der</button>
-            <button class="btn btn-die" onclick="handleInput('die')">die</button>
-            <button class="btn btn-das" onclick="handleInput('das')">das</button>
-        </div>
+        <!-- PANTALLA LISTA -->
+        <div id="screen-list" class="screen">
+            <input type="text" class="vocab-filter" placeholder="🔍 Buscar..." onkeyup="filterList(this.value)">
 
-        <button id="btn-review" class="btn-review" onclick="startReviewMode()">
-            🔄 Repasar mis Errores
+            <div class="vocab-list-container">
+                <div class="history-list" id="full-vocab-list">
+                    <!-- JS populate here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVEGACION -->
+    <div class="bottom-nav">
+        <button class="nav-btn active" onclick="switchScreen('game', this)">
+            🎮 <span>Juego</span>
         </button>
-
-        <div class="history-section">
-            <div class="history-title">Últimas palabras</div>
-            <div class="history-list" id="history-list"></div>
-        </div>
+        <button class="nav-btn" onclick="switchScreen('list', this)">
+            📚 <span>Lista</span>
+        </button>
     </div>
 
     <script>
         const vocabulary = [
             // Transportes
-            { word: "Bus", article: "der", meaning: "Autobús" }, { word: "Zug", article: "der", meaning: "Tren" },
-            { word: "Reisebus", article: "der", meaning: "Autobús de viaje" }, { word: "Lastwagen", article: "der", meaning: "Camión" },
-            { word: "Hubschrauber", article: "der", meaning: "Helicóptero" }, { word: "U-Bahn", article: "die", meaning: "Metro" },
-            { word: "Straßenbahn", article: "die", meaning: "Tranvía" }, { word: "Fahrrad", article: "das", meaning: "Bicicleta" },
-            { word: "Moped", article: "das", meaning: "Ciclomotor" }, { word: "Motorrad", article: "das", meaning: "Motocicleta" },
-            { word: "Taxi", article: "das", meaning: "Taxi" }, { word: "Auto", article: "das", meaning: "Automóvil" },
-            { word: "Wohnmobil", article: "das", meaning: "Autocaravana" }, { word: "Flugzeug", article: "das", meaning: "Avión" },
-            { word: "Schiff", article: "das", meaning: "Barco" }, { word: "Boot", article: "das", meaning: "Bote" },
+            { category: "Transportes", word: "Bus", article: "der", meaning: "Autobús" },
+            { category: "Transportes", word: "Zug", article: "der", meaning: "Tren" },
+            { category: "Transportes", word: "Reisebus", article: "der", meaning: "Autobús de viaje" },
+            { category: "Transportes", word: "Lastwagen", article: "der", meaning: "Camión" },
+            { category: "Transportes", word: "Hubschrauber", article: "der", meaning: "Helicóptero" },
+            { category: "Transportes", word: "U-Bahn", article: "die", meaning: "Metro" },
+            { category: "Transportes", word: "Straßenbahn", article: "die", meaning: "Tranvía" },
+            { category: "Transportes", word: "Fahrrad", article: "das", meaning: "Bicicleta" },
+            { category: "Transportes", word: "Moped", article: "das", meaning: "Ciclomotor" },
+            { category: "Transportes", word: "Motorrad", article: "das", meaning: "Motocicleta" },
+            { category: "Transportes", word: "Taxi", article: "das", meaning: "Taxi" },
+            { category: "Transportes", word: "Auto", article: "das", meaning: "Automóvil" },
+            { category: "Transportes", word: "Wohnmobil", article: "das", meaning: "Autocaravana" },
+            { category: "Transportes", word: "Flugzeug", article: "das", meaning: "Avión" },
+            { category: "Transportes", word: "Schiff", article: "das", meaning: "Barco" },
+            { category: "Transportes", word: "Boot", article: "das", meaning: "Bote" },
             // Lugares
-            { word: "Bahnhof", article: "der", meaning: "Estación de tren" }, { word: "Hafen", article: "der", meaning: "Puerto" },
-            { word: "Park", article: "der", meaning: "Parque" }, { word: "Markt", article: "der", meaning: "Mercado" },
-            { word: "Marktplatz", article: "der", meaning: "Plaza del mercado" }, { word: "Sportplatz", article: "der", meaning: "Campo deportivo" },
-            { word: "Spielplatz", article: "der", meaning: "Parque infantil" }, { word: "Supermarkt", article: "der", meaning: "Supermercado" },
-            { word: "Zoo", article: "der", meaning: "Zoológico" }, { word: "Fluss", article: "der", meaning: "Río" },
-            { word: "See", article: "der", meaning: "Lago" }, { word: "Turm", article: "der", meaning: "Torre" },
-            { word: "Rathaus", article: "das", meaning: "Ayuntamiento" }, { word: "Theater", article: "das", meaning: "Teatro" },
-            { word: "Museum", article: "das", meaning: "Museo" }, { word: "Hotel", article: "das", meaning: "Hotel" },
-            { word: "Kino", article: "das", meaning: "Cine" }, { word: "Café", article: "das", meaning: "Cafetería" },
-            { word: "Krankenhaus", article: "das", meaning: "Hospital" }, { word: "Schwimmbad", article: "das", meaning: "Piscina" },
-            { word: "Konzerthaus", article: "das", meaning: "Sala de conciertos" }, { word: "Kirche", article: "die", meaning: "Iglesia" },
-            { word: "Bank", article: "die", meaning: "Banco" }, { word: "Post", article: "die", meaning: "Correos" },
-            { word: "Schule", article: "die", meaning: "Escuela" }, { word: "Bibliothek", article: "die", meaning: "Biblioteca" },
-            { word: "Apotheke", article: "die", meaning: "Farmacia" }, { word: "Bushaltestelle", article: "die", meaning: "Parada de autobús" },
-            { word: "Polizei", article: "die", meaning: "Policía" }, { word: "Toilette", article: "die", meaning: "Baño" },
-            { word: "Kunsthalle", article: "die", meaning: "Galería de arte" }, { word: "Brücke", article: "die", meaning: "Puente" },
+            { category: "Lugares", word: "Bahnhof", article: "der", meaning: "Estación de tren" },
+            { category: "Lugares", word: "Hafen", article: "der", meaning: "Puerto" },
+            { category: "Lugares", word: "Park", article: "der", meaning: "Parque" },
+            { category: "Lugares", word: "Markt", article: "der", meaning: "Mercado" },
+            { category: "Lugares", word: "Marktplatz", article: "der", meaning: "Plaza del mercado" },
+            { category: "Lugares", word: "Sportplatz", article: "der", meaning: "Campo deportivo" },
+            { category: "Lugares", word: "Spielplatz", article: "der", meaning: "Parque infantil" },
+            { category: "Lugares", word: "Supermarkt", article: "der", meaning: "Supermercado" },
+            { category: "Lugares", word: "Zoo", article: "der", meaning: "Zoológico" },
+            { category: "Lugares", word: "Fluss", article: "der", meaning: "Río" },
+            { category: "Lugares", word: "See", article: "der", meaning: "Lago" },
+            { category: "Lugares", word: "Turm", article: "der", meaning: "Torre" },
+            { category: "Lugares", word: "Rathaus", article: "das", meaning: "Ayuntamiento" },
+            { category: "Lugares", word: "Theater", article: "das", meaning: "Teatro" },
+            { category: "Lugares", word: "Museum", article: "das", meaning: "Museo" },
+            { category: "Lugares", word: "Hotel", article: "das", meaning: "Hotel" },
+            { category: "Lugares", word: "Kino", article: "das", meaning: "Cine" },
+            { category: "Lugares", word: "Café", article: "das", meaning: "Cafetería" },
+            { category: "Lugares", word: "Krankenhaus", article: "das", meaning: "Hospital" },
+            { category: "Lugares", word: "Schwimmbad", article: "das", meaning: "Piscina" },
+            { category: "Lugares", word: "Konzerthaus", article: "das", meaning: "Sala de conciertos" },
+            { category: "Lugares", word: "Kirche", article: "die", meaning: "Iglesia" },
+            { category: "Lugares", word: "Bank", article: "die", meaning: "Banco" },
+            { category: "Lugares", word: "Post", article: "die", meaning: "Correos" },
+            { category: "Lugares", word: "Schule", article: "die", meaning: "Escuela" },
+            { category: "Lugares", word: "Bibliothek", article: "die", meaning: "Biblioteca" },
+            { category: "Lugares", word: "Apotheke", article: "die", meaning: "Farmacia" },
+            { category: "Lugares", word: "Bushaltestelle", article: "die", meaning: "Parada de autobús" },
+            { category: "Lugares", word: "Polizei", article: "die", meaning: "Policía" },
+            { category: "Lugares", word: "Toilette", article: "die", meaning: "Baño" },
+            { category: "Lugares", word: "Kunsthalle", article: "die", meaning: "Galería de arte" },
+            { category: "Lugares", word: "Brücke", article: "die", meaning: "Puente" },
             // Comida
-            { word: "Apfel", article: "der", meaning: "Manzana" }, { word: "Salat", article: "der", meaning: "Ensalada" },
-            { word: "Käse", article: "der", meaning: "Queso" }, { word: "Schinken", article: "der", meaning: "Jamón" },
-            { word: "Fisch", article: "der", meaning: "Pescado" }, { word: "Kuchen", article: "der", meaning: "Pastel" },
-            { word: "Reis", article: "der", meaning: "Arroz" }, { word: "Kaffee", article: "der", meaning: "Café" },
-            { word: "Tee", article: "der", meaning: "Té" }, { word: "Wein", article: "der", meaning: "Vino" },
-            { word: "Banane", article: "die", meaning: "Plátano" }, { word: "Birne", article: "die", meaning: "Pera" },
-            { word: "Orange", article: "die", meaning: "Naranja" }, { word: "Kartoffel", article: "die", meaning: "Patata" },
-            { word: "Tomate", article: "die", meaning: "Tomate" }, { word: "Gurke", article: "die", meaning: "Pepino" },
-            { word: "Zwiebel", article: "die", meaning: "Cebolla" }, { word: "Milch", article: "die", meaning: "Leche" },
-            { word: "Butter", article: "die", meaning: "Mantequilla" }, { word: "Wurst", article: "die", meaning: "Salchicha" },
-            { word: "Marmelade", article: "die", meaning: "Mermelada" }, { word: "Suppe", article: "die", meaning: "Sopa" },
-            { word: "Pizza", article: "die", meaning: "Pizza" }, { word: "Torte", article: "die", meaning: "Tarta" },
-            { word: "Gemüse", article: "das", meaning: "Verdura" }, { word: "Ei", article: "das", meaning: "Huevo" },
-            { word: "Fleisch", article: "das", meaning: "Carne" }, { word: "Hähnchen", article: "das", meaning: "Pollo" },
-            { word: "Brot", article: "das", meaning: "Pan" }, { word: "Brötchen", article: "das", meaning: "Panecillo" },
-            { word: "Salz", article: "das", meaning: "Sal" }, { word: "Eis", article: "das", meaning: "Helado" },
-            { word: "Wasser", article: "das", meaning: "Agua" }, { word: "Bier", article: "das", meaning: "Cerveza" }
+            { category: "Comida", word: "Apfel", article: "der", meaning: "Manzana" },
+            { category: "Comida", word: "Salat", article: "der", meaning: "Ensalada" },
+            { category: "Comida", word: "Käse", article: "der", meaning: "Queso" },
+            { category: "Comida", word: "Schinken", article: "der", meaning: "Jamón" },
+            { category: "Comida", word: "Fisch", article: "der", meaning: "Pescado" },
+            { category: "Comida", word: "Kuchen", article: "der", meaning: "Pastel" },
+            { category: "Comida", word: "Reis", article: "der", meaning: "Arroz" },
+            { category: "Comida", word: "Kaffee", article: "der", meaning: "Café" },
+            { category: "Comida", word: "Tee", article: "der", meaning: "Té" },
+            { category: "Comida", word: "Wein", article: "der", meaning: "Vino" },
+            { category: "Comida", word: "Banane", article: "die", meaning: "Plátano" },
+            { category: "Comida", word: "Birne", article: "die", meaning: "Pera" },
+            { category: "Comida", word: "Orange", article: "die", meaning: "Naranja" },
+            { category: "Comida", word: "Kartoffel", article: "die", meaning: "Patata" },
+            { category: "Comida", word: "Tomate", article: "die", meaning: "Tomate" },
+            { category: "Comida", word: "Gurke", article: "die", meaning: "Pepino" },
+            { category: "Comida", word: "Zwiebel", article: "die", meaning: "Cebolla" },
+            { category: "Comida", word: "Milch", article: "die", meaning: "Leche" },
+            { category: "Comida", word: "Butter", article: "die", meaning: "Mantequilla" },
+            { category: "Comida", word: "Wurst", article: "die", meaning: "Salchicha" },
+            { category: "Comida", word: "Marmelade", article: "die", meaning: "Mermelada" },
+            { category: "Comida", word: "Suppe", article: "die", meaning: "Sopa" },
+            { category: "Comida", word: "Pizza", article: "die", meaning: "Pizza" },
+            { category: "Comida", word: "Torte", article: "die", meaning: "Tarta" },
+            { category: "Comida", word: "Gemüse", article: "das", meaning: "Verdura" },
+            { category: "Comida", word: "Ei", article: "das", meaning: "Huevo" },
+            { category: "Comida", word: "Fleisch", article: "das", meaning: "Carne" },
+            { category: "Comida", word: "Hähnchen", article: "das", meaning: "Pollo" },
+            { category: "Comida", word: "Brot", article: "das", meaning: "Pan" },
+            { category: "Comida", word: "Brötchen", article: "das", meaning: "Panecillo" },
+            { category: "Comida", word: "Salz", article: "das", meaning: "Sal" },
+            { category: "Comida", word: "Eis", article: "das", meaning: "Helado" },
+            { category: "Comida", word: "Wasser", article: "das", meaning: "Agua" },
+            { category: "Comida", word: "Bier", article: "das", meaning: "Cerveza" }
         ];
 
         let state = {
@@ -529,12 +683,21 @@
             btns: document.querySelectorAll('.btn'),
             historyList: document.getElementById('history-list'),
             btnReview: document.getElementById('btn-review'),
-            banner: document.getElementById('review-banner')
+            banner: document.getElementById('review-banner'),
+            fullList: document.getElementById('full-vocab-list')
         };
+
+        function switchScreen(screenName, btn) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(`screen-${screenName}`).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
 
         function init() {
             state.deck = shuffle([...vocabulary]);
             loadCard();
+            renderFullList(vocabulary);
         }
 
         function shuffle(array) {
@@ -547,12 +710,10 @@
             state.deck = shuffle([...state.errors]);
             state.currentIndex = 0;
             state.errors = [];
-
             els.banner.style.display = 'block';
             els.banner.textContent = `⚡ REPASANDO ${state.deck.length} ERRORES`;
             els.btnReview.style.display = 'none';
             els.errors.textContent = 0;
-
             loadCard();
         }
 
@@ -580,7 +741,6 @@
             els.meaning.textContent = item.meaning;
 
             els.card.classList.remove('shake');
-            els.overlay.className = 'feedback-overlay';
             els.overlay.classList.remove('visible');
             els.btns.forEach(b => b.disabled = false);
 
@@ -594,11 +754,8 @@
 
             els.btns.forEach(b => b.disabled = true);
 
-            if (isCorrect) {
-                handleSuccess(item);
-            } else {
-                handleFail(item);
-            }
+            if (isCorrect) handleSuccess(item);
+            else handleFail(item);
 
             addToHistory(item, isCorrect);
         }
@@ -613,52 +770,35 @@
                 <div class="hist-meaning">${item.meaning}</div>
             `;
             els.historyList.prepend(div);
-
-            if (els.historyList.children.length > 10) {
-                els.historyList.removeChild(els.historyList.lastChild);
-            }
+            if (els.historyList.children.length > 10) els.historyList.removeChild(els.historyList.lastChild);
         }
 
         function handleSuccess(item) {
             if (!state.isReviewMode) state.score++;
             state.streak++;
             updateStats();
-
             showFeedback(true, item);
-
-            setTimeout(() => {
-                state.currentIndex++;
-                loadCard();
-            }, 900);
+            setTimeout(() => { state.currentIndex++; loadCard(); }, 900);
         }
 
         function handleFail(item) {
             state.streak = 0;
-            if (!state.errors.find(e => e.word === item.word)) {
-                state.errors.push(item);
-            }
+            if (!state.errors.find(e => e.word === item.word)) state.errors.push(item);
             updateStats();
-
             els.card.classList.add('shake');
             showFeedback(false, item);
-
             if (state.errors.length > 0 && !state.isReviewMode) {
                 els.btnReview.style.display = 'block';
                 els.btnReview.textContent = `🔄 Repasar mis ${state.errors.length} Errores`;
             }
-
-            setTimeout(() => {
-                state.currentIndex++;
-                loadCard();
-            }, 1800);
+            setTimeout(() => { state.currentIndex++; loadCard(); }, 1800);
         }
 
         function showFeedback(isCorrect, item) {
-            els.overlay.className = `feedback-overlay ${isCorrect ? 'correct' : 'wrong'} visible`;
+            els.overlay.classList.add('visible');
             els.fbIcon.textContent = isCorrect ? '🎉' : '❌';
             els.fbText.textContent = isCorrect ? '¡CORRECTO!' : 'INCORRECTO';
             els.fbText.style.color = isCorrect ? '#22c55e' : '#f43f5e';
-
             els.fbSub.innerHTML = isCorrect ?
                 `¡Sigue así!` :
                 `La respuesta era <b style="color:var(--${item.article}); text-transform:uppercase">${item.article}</b> ${item.word}`;
@@ -668,6 +808,61 @@
             els.score.textContent = state.score;
             els.streak.textContent = state.streak;
             els.errors.textContent = state.errors.length;
+        }
+
+        // --- NEW CATEGORY LIST LOGIC ---
+        function renderFullList(list) {
+            els.fullList.innerHTML = '';
+
+            // 1. Group by Category
+            const groups = list.reduce((acc, item) => {
+                if (!acc[item.category]) acc[item.category] = [];
+                acc[item.category].push(item);
+                return acc;
+            }, {});
+
+            // 2. Define Category Order
+            const catOrder = ['Transportes', 'Lugares', 'Comida'];
+
+            catOrder.forEach(cat => {
+                if (!groups[cat]) return;
+
+                // Add Header
+                const header = document.createElement('div');
+                header.className = 'list-category-header';
+                header.textContent = cat;
+                els.fullList.appendChild(header);
+
+                // 3. Sort by Article (der, die, das) then Word
+                const sortedItems = groups[cat].sort((a, b) => {
+                    // Custom article order: der -> das -> die
+                    const artOrder = { 'der': 1, 'das': 2, 'die': 3 };
+                    if (artOrder[a.article] !== artOrder[b.article]) {
+                        return artOrder[a.article] - artOrder[b.article];
+                    }
+                    return a.word.localeCompare(b.word);
+                });
+
+                sortedItems.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'history-item';
+                    div.innerHTML = `
+                        <div class="hist-article hist-${item.article}">${item.article}</div>
+                        <div class="hist-word">${item.word}</div>
+                        <div class="hist-meaning">${item.meaning}</div>
+                    `;
+                    els.fullList.appendChild(div);
+                });
+            });
+        }
+
+        function filterList(query) {
+            const lowerQ = query.toLowerCase();
+            const filtered = vocabulary.filter(w =>
+                w.word.toLowerCase().includes(lowerQ) ||
+                w.meaning.toLowerCase().includes(lowerQ)
+            );
+            renderFullList(filtered);
         }
 
         init();
