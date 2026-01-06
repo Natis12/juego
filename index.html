@@ -15,6 +15,7 @@
             --bg: #f8fafc;
             --text: #0f172a;
             --card-bg: #ffffff;
+            --accent: #8b5cf6;
         }
 
         * {
@@ -42,6 +43,33 @@
             padding-bottom: 20px;
         }
 
+        /* Review Mode Banner */
+        .review-banner {
+            background: var(--accent);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         /* Header Stats */
         .stats-bar {
             display: flex;
@@ -56,9 +84,19 @@
             backdrop-filter: blur(5px);
         }
 
+        .stat-val {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         .stat-val span {
             color: var(--text);
             font-weight: 800;
+        }
+
+        .error-count {
+            color: var(--die);
         }
 
         /* Progress Bar */
@@ -112,7 +150,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -133,7 +171,6 @@
             transform: scale(0.92);
         }
 
-        /* Button Colors */
         .btn-der {
             background: var(--der);
             box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.3);
@@ -147,6 +184,25 @@
         .btn-das {
             background: var(--das);
             box-shadow: 0 8px 15px -3px rgba(34, 197, 94, 0.3);
+        }
+
+        /* Review Errors Button */
+        .btn-review {
+            width: 100%;
+            background: white;
+            color: var(--die);
+            border: 2px solid var(--die);
+            padding: 12px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            display: none;
+            cursor: pointer;
+        }
+
+        .btn-review:active {
+            transform: scale(0.98);
         }
 
         /* History Section */
@@ -329,8 +385,11 @@
         <h3 style="text-align:center; margin:0 0 15px; opacity:0.5; font-size:0.8rem; letter-spacing:1px">ALEMÁN A1.1
         </h3>
 
+        <div id="review-banner" class="review-banner">⚡ MODO REPASO DE ERRORES</div>
+
         <div class="stats-bar">
             <div class="stat-val">🔥 <span id="streak">0</span></div>
+            <div class="stat-val">⚠️ <span id="errors" class="error-count">0</span></div>
             <div class="stat-val">✅ <span id="score">0</span></div>
         </div>
 
@@ -342,7 +401,6 @@
             <div class="word-de" id="word">...</div>
             <div class="word-es" id="meaning">...</div>
 
-            <!-- Feedback Overlay inside card -->
             <div class="feedback-overlay" id="feedback-overlay">
                 <div class="feedback-icon" id="feedback-icon"></div>
                 <div class="feedback-text" id="feedback-text"></div>
@@ -356,16 +414,17 @@
             <button class="btn btn-das" onclick="handleInput('das')">das</button>
         </div>
 
+        <button id="btn-review" class="btn-review" onclick="startReviewMode()">
+            🔄 Repasar mis Errores
+        </button>
+
         <div class="history-section">
             <div class="history-title">Historial</div>
-            <div class="history-list" id="history-list">
-                <!-- History items will appear here -->
-            </div>
+            <div class="history-list" id="history-list"></div>
         </div>
     </div>
 
     <script>
-        // Data populated from previous context
         const vocabulary = [
             // Transportes
             { word: "Bus", article: "der", meaning: "Autobús" }, { word: "Zug", article: "der", meaning: "Tren" },
@@ -417,7 +476,9 @@
             currentIndex: 0,
             score: 0,
             streak: 0,
-            deck: []
+            deck: [],
+            errors: [],
+            isReviewMode: false
         };
 
         const els = {
@@ -426,13 +487,16 @@
             meaning: document.getElementById('meaning'),
             score: document.getElementById('score'),
             streak: document.getElementById('streak'),
+            errors: document.getElementById('errors'),
             progress: document.getElementById('progress'),
             overlay: document.getElementById('feedback-overlay'),
             fbIcon: document.getElementById('feedback-icon'),
             fbText: document.getElementById('feedback-text'),
             fbSub: document.getElementById('feedback-sub'),
             btns: document.querySelectorAll('.btn'),
-            historyList: document.getElementById('history-list')
+            historyList: document.getElementById('history-list'),
+            btnReview: document.getElementById('btn-review'),
+            banner: document.getElementById('review-banner')
         };
 
         function init() {
@@ -444,8 +508,37 @@
             return array.sort(() => Math.random() - 0.5);
         }
 
+        function startReviewMode() {
+            if (state.errors.length === 0) return;
+
+            state.isReviewMode = true;
+            state.deck = shuffle([...state.errors]); // Copy errors to deck
+            state.currentIndex = 0;
+            state.errors = []; // Clear errors stack for new session (or keep? usually clear to retry)
+
+            els.banner.style.display = 'block';
+            els.banner.textContent = `⚡ REPASANDO ${state.deck.length} ERRORES`;
+            els.btnReview.style.display = 'none';
+            els.errors.textContent = 0; // Reset error counter view
+
+            loadCard();
+        }
+
+        function endReviewMode() {
+            state.isReviewMode = false;
+            els.banner.style.display = 'none';
+            state.deck = shuffle([...vocabulary]); // Back to normal deck
+            state.currentIndex = 0;
+            loadCard();
+        }
+
         function loadCard() {
             if (state.currentIndex >= state.deck.length) {
+                if (state.isReviewMode) {
+                    alert("¡Repaso completado! Volviendo al modo normal.");
+                    endReviewMode();
+                    return;
+                }
                 state.deck = shuffle([...vocabulary]);
                 state.currentIndex = 0;
             }
@@ -469,7 +562,6 @@
             const item = state.deck[state.currentIndex];
             const isCorrect = choice === item.article;
 
-            // Lock buttons
             els.btns.forEach(b => b.disabled = true);
 
             if (isCorrect) {
@@ -478,13 +570,13 @@
                 handleFail(item);
             }
 
-            // Add to history
-            addToHistory(item);
+            addToHistory(item, isCorrect);
         }
 
-        function addToHistory(item) {
+        function addToHistory(item, isCorrect) {
             const div = document.createElement('div');
             div.className = 'history-item';
+            div.style.borderLeft = isCorrect ? '4px solid #4ade80' : '4px solid #ef4444';
             div.innerHTML = `
                 <div class="hist-article hist-${item.article}">${item.article}</div>
                 <div class="hist-word">${item.word}</div>
@@ -492,14 +584,13 @@
             `;
             els.historyList.prepend(div);
 
-            // Keep only last 10
             if (els.historyList.children.length > 10) {
                 els.historyList.removeChild(els.historyList.lastChild);
             }
         }
 
         function handleSuccess(item) {
-            state.score++;
+            if (!state.isReviewMode) state.score++;
             state.streak++;
             updateStats();
 
@@ -513,10 +604,22 @@
 
         function handleFail(item) {
             state.streak = 0;
+
+            // Add to errors if unique
+            if (!state.errors.find(e => e.word === item.word)) {
+                state.errors.push(item);
+            }
+
             updateStats();
 
             els.card.classList.add('shake');
             showFeedback(false, item);
+
+            // Show review button if we have errors
+            if (state.errors.length > 0 && !state.isReviewMode) {
+                els.btnReview.style.display = 'block';
+                els.btnReview.textContent = `🔄 Repasar mis ${state.errors.length} Errores`;
+            }
 
             setTimeout(() => {
                 state.currentIndex++;
@@ -538,6 +641,7 @@
         function updateStats() {
             els.score.textContent = state.score;
             els.streak.textContent = state.streak;
+            els.errors.textContent = state.errors.length;
         }
 
         init();
